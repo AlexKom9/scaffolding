@@ -1,0 +1,20 @@
+{
+  "name": "scaffolding",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Alexsandr <909komar@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/AlexKom9/scaffolding",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
