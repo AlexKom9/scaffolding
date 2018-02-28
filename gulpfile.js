@@ -8,16 +8,8 @@ let gulp = require('gulp'),
     uglify = require('gulp-uglifyes'),
     imagemin = require('gulp-imagemin'),
     clean = require('rimraf'),
-    browserSync = require('browser-sync').create();
-
-
-// gulp.task("start", function(){
-//     gulp.src("./app")
-//         .pipe(server({
-//             open: true,
-//             livereload: true
-//         }))
-// });
+    browserSync = require('browser-sync').create(),
+    runSequence = require('run-sequence');
 
 gulp.task("styles", function(){
     gulp.src("./app/sass/**/*.sass")
@@ -39,17 +31,27 @@ gulp.task("images", function(){
         .pipe(gulp.dest("./build/img"))
 });
 
+gulp.task("fonts", function(){
+    gulp.src("./app/fonts/**/*").pipe(gulp.dest("./build/fonts"));
+})
+
 gulp.task("clean", function(cb){
     clean('./build', cb);
 });
 
-gulp.task("build", ["clean", "images"], function(){
+gulp.task("build-html-js-css", function(){
     gulp.src("./app/index.html")
         .pipe(useref())
         .pipe( gulpIf('*.css', csso()) )
         .pipe( gulpIf('*.js', uglify()) )
         .pipe(gulp.dest('./build'))
 });
+
+gulp.task('build', function (callback) {
+    runSequence('clean', ['images', 'fonts', 'build-html-js-css'], callback);
+});
+
+
 
 gulp.task("watch", function(){
     gulp.watch("./app/sass/**/*.sass", ["styles"]);
